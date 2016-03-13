@@ -1,0 +1,48 @@
+<html>
+<head>
+  <title>chatApp</title>
+  <style>
+  * {box-sizing: border-box;}
+  form {
+    position: fixed;
+    bottom: 0;
+    padding: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
+    max-width: 500px;
+   }
+  </style>
+  <% include ../partials/head %>
+</head>
+<body class="container">
+
+  <div>
+    <h1 id="s_id"><%= sender %></h1>
+  </div>
+  <div>
+    <h1 id="r_id"><%= receiver %></h1>
+  </div>
+  <table id="messages" class="table">
+  </table>
+  <form action="" >
+    <input id = "message"/>
+    <button class="btn btn-success">Send</button>
+  </form>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script>
+  var socket = io();
+  $('form').submit(function(){
+    socket.emit('send', $('#s_id').text(), $('#message').val());
+    alert($('#message').val());
+    $('#message').val('');
+    return false;
+  });
+  socket.on('send', function(sender, msg){
+    var str = '<tr><td width="10%">' + sender + ': ' + '</td><td>' + msg  + '</td>';
+    $('#messages').append(str);
+  });
+
+  </script>
+
+</body>
+</html>

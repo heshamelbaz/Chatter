@@ -4,11 +4,16 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var socket_io    = require( "socket.io" );
+
+var app = express();
+
+var io           = socket_io();
+app.io           = io;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,6 +29,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+
+app.get('/chat', function(req, res){
+  sender = req.query.sender;
+  receiver = req.query.receiver;
+  if(typeof sender === "undefined" || typeof receiver === "undefined"){
+    res.render(path.join('pages/chat.ejs'), {error: true});
+    return;
+  }
+  console.log("sender from request: " + sender);
+  console.log("receiver from request: " + receiver);
+  res.render('pages/chat', {sender: sender, receiver: receiver});
+});
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,5 +75,20 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+
+io.on('connection', function(socket){
+
+  socket.on("send", function(sender, msg){
+    console.log("sender in connection, from send function: " + sender);
+    console.log("msg in send, from request: " + msg);
+    if(!(typeof msg === "undefined" || msg ==="")){
+      io.emit('send', sender, msg);
+    }
+  });
+  socket.on("disconnect", function(){
+    console.log('user disconnected');
+  });
+});
 
 module.exports = app;
