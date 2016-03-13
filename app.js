@@ -37,8 +37,8 @@ app.get('/chat', function(req, res){
     res.render(path.join('pages/chat.ejs'), {error: true});
     return;
   }
-  console.log("sender from request: " + sender);
-  console.log("receiver from request: " + receiver);
+  // console.log("sender from request: " + sender);
+  // console.log("receiver from request: " + receiver);
   res.render('pages/chat', {sender: sender, receiver: receiver});
 });
 
@@ -76,17 +76,20 @@ app.use(function(err, req, res, next) {
 });
 
 
-
-io.on('connection', function(socket){
-
-  socket.on("send", function(sender, msg){
-    console.log("sender in connection, from send function: " + sender);
-    console.log("msg in send, from request: " + msg);
+var i =1;
+var map = new Object()  ;
+io.on('connection', function(client){
+  map[i++]=client.id;
+  console.log(i-1 + " " + client.id);
+  client.on("send", function(sender, receiver,  msg){
+    console.log("send function:  " + sender + " "  + receiver + "  " + msg);
     if(!(typeof msg === "undefined" || msg ==="")){
+      console.log(map);
+      client.send(map[receiver]);
       io.emit('send', sender, msg);
     }
   });
-  socket.on("disconnect", function(){
+  client.on("disconnect", function(){
     console.log('user disconnected');
   });
 });

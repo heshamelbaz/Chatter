@@ -32,7 +32,7 @@
   <script>
   var socket = io();
   $('form').submit(function(){
-    socket.emit('send', $('#s_id').text(), $('#message').val());
+    socket.emit('send', $('#s_id').text(), $('#r_id').text(), $('#message').val());
     alert($('#message').val());
     $('#message').val('');
     return false;
