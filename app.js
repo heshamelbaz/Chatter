@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var socket_io    = require( "socket.io" );
+var mongoose = require('mongoose');
 
 var app = express();
 
@@ -14,7 +15,8 @@ app.io           = io;
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-
+var db = require('./config/db.js');
+mongoose.connect(db.url);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
