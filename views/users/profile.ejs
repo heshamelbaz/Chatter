@@ -1,21 +1,11 @@
 <!doctype html>
-<div class='col-sm-6'>
+
+<div class='col-sm-8 col-sm-offset-2'>
 	<div class='well'>
-		<h3>Local Data</h3>	
-		<strong>id</strong>: <%= user._id %></br>
-		<strong>email</strong>: <%= user.local.email %></br>
-		<strong>password</strong>: <%= user.local.password %>
+		<h3><%= user.name %></h3>	
+		<strong>Id</strong>: <%= user._id %></br>	
+		<strong>Email</strong>: <%= user.email %></br>	
+		<strong>Profile Picture</strong>: <img width=100 height=100 src=<%= user.photo %>></img>
 	</div>
 </div>
 
-<div class='col-sm-6'>
-
-	<div class='well'>
-		<h3>Facebook Data</h3>	
-		<strong>Id</strong>: <%= user._id %> </br>
-		<strong>Facebook Id</strong>: <%= user.facebook.id %></br>
-		<strong>Name</strong>: <%= user.facebook.name %></br>
-		<strong>Email</strong>: <%= user.facebook.email %></br>
-		<strong>Profile Picture</strong>: <img src=<%= user.photo %>></img>
-	</div>
-</div>
