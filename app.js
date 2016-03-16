@@ -31,16 +31,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 // Should be environment variable
 app.use(
 	session({ 
-		secret: 'yaca-secret' 
+		secret: 'yaca-secret',
+		resave: false,
+		saveUninitialized: true 
 	})
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use('/', routes);
 app.use('/users', users);

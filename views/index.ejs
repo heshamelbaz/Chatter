@@ -1,11 +1,13 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<!DOCTYPE HTML>
+<div class='jumbotron'>
+	<h1><%= title %></h1>
+	<p>Yet Another Chatting App !</p>
+	<% if (!isLoggedIn){ %>
+		<a href='/users/auth/facebook' class='btn btn-primary'>Facebook</a>
+		<a href='/users/login' class='btn btn-primary'>Login</a>
+		<a href='/users/signup' class='btn btn-success'>Signup</a>
+	<% } else { %>
+		<a href='/users/profile' class='btn btn-warning'>Profile</a>
+	<% } %>
+	
+</div>    	

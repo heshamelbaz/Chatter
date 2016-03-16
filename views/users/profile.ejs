@@ -1,0 +1,21 @@
+<!doctype html>
+<div class='col-sm-6'>
+	<div class='well'>
+		<h3>Local Data</h3>	
+		<strong>id</strong>: <%= user._id %></br>
+		<strong>email</strong>: <%= user.local.email %></br>
+		<strong>password</strong>: <%= user.local.password %>
+	</div>
+</div>
+
+<div class='col-sm-6'>
+
+	<div class='well'>
+		<h3>Facebook Data</h3>	
+		<strong>Id</strong>: <%= user._id %> </br>
+		<strong>Facebook Id</strong>: <%= user.facebook.id %></br>
+		<strong>Email</strong>: <%= user.facebook.email %></br>
+		<strong>Token</strong>: <%= user.facebook.token %></br>
+		<strong>Name</strong>: <%= user.facebook.name %>
+	</div>
+</div>
