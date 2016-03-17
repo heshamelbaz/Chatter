@@ -14,13 +14,13 @@ var chats = require('./routes/chats');
 // console.log(users);
 // console.log(chats);
 // console.log(chats.apple);
-
-var io = chats.listen();
+var socket_io = require( "socket.io" );
+var io = socket_io();
+var s_io = require('./routes/socket.js')(io);
 // console.log(io);
 app.io = io;
 
 // the worst way to write the wrongs!
-var helper = chats.router;
 // console.log(chats);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/chats', helper);
+app.use('/chat', chats);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
