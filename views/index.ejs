@@ -1,13 +1,41 @@
 <!DOCTYPE HTML>
-<div class='jumbotron'>
-	<h1><%= title %></h1>
-	<p>Yet Another Chatting App !</p>
-	<% if (!isLoggedIn){ %>
-		<a href='/users/auth/facebook' class='btn btn-primary'>Facebook</a>
-		<a href='/users/login' class='btn btn-primary'>Login</a>
-		<a href='/users/signup' class='btn btn-success'>Signup</a>
-	<% } else { %>
-		<a href='/users/profile' class='btn btn-warning'>Profile</a>
-	<% } %>
-	
-</div>    	
+<link rel='stylesheet' href='/stylesheets/index.css'>
+
+<div class='row overlay-bg'>
+	<div class='col-lg-6 center-text'>
+		<img class='appicon' src='images/appicon.png'></img>
+		<h1><%= title %></h1>
+		<h2>Yet Another Chatting App</h2>
+		<br/>
+		<img class='store-badge' src='/images/appstore.png'></img>
+		<img class='store-badge' src='/images/playstore.png'></img>
+	</div>
+	<div class='col-lg-6 center-text'>
+		<div class='col-lg-5 col-lg-offset-4'>
+			<form class='form-horizontal' action="/users/signup" method="post">
+				<% if (message.length > 0) { %>
+					<div class='form-group'>
+						<div class='alert alert-danger'><%= message %></div>
+					</div>
+				<% } %> 
+				<div class='form-group'>
+					<input type="text" placeholder='Name' class='form-control' name='name'>
+				</div>
+				<div class='form-group'>	
+					<input type="email" placeholder='Email' class='form-control' name="email">
+				</div>
+				<div class='form-group'>	
+					<input type="password" placeholder='Password' class='form-control' name="password">
+				</div>
+				<div class='form-group'>
+					<button type="submit" class='form-control btn btn-info'>Signup</button>
+				</div>
+			</form>
+			<p>Already a user? <a href='/users/login'>Login</a></p>	
+			<a href='/users/auth/facebook' class='btn btn-primary'><i class='fa fa-facebook'></i></a>
+			<a class='btn btn-info'><i class='fa fa-twitter'></i></a>
+			<a class='btn btn-danger'><i class='fa fa-google-plus'></i></a>
+		</div>	
+	</div>
+</div>
+
