@@ -4,19 +4,24 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var socket_io    = require( "socket.io" );
-var mongoose = require('mongoose');
 
 var app = express();
 
-var io           = socket_io();
-app.io           = io;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var chats = require('./routes/chats');
+// console.log(users);
+// console.log(chats);
+// console.log(chats.apple);
 
-var db = require('./config/db.js');
-mongoose.connect(db.url);
+var io = chats.listen();
+// console.log(io);
+app.io = io;
+
+// the worst way to write the wrongs!
+var helper = chats.router;
+// console.log(chats);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -29,23 +34,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', routes);
 app.use('/users', users);
-
-app.get('/chat', function(req, res){
-  sender = req.query.sender;
-  receiver = req.query.receiver;
-  if(typeof sender === "undefined" || typeof receiver === "undefined"){
-    res.render(path.join('pages/chat.ejs'), {error: true});
-    return;
-  }
-  // console.log("sender from request: " + sender);
-  // console.log("receiver from request: " + receiver);
-  res.render('pages/chat', {sender: sender, receiver: receiver});
-});
-
-
-
+app.use('/chats', helper);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -78,26 +70,5 @@ app.use(function(err, req, res, next) {
 });
 
 
-var i =1;
-var map = new Object()  ;
-io.on('connection', function(client){
-  map[i++]=client.id;
-  console.log(i-1 + " " + client.id);
-  client.send(map[1]);
-  client.on("send", function(sender, receiver,  msg){
-    console.log("send function:  " + sender + " "  + receiver + "  " + msg);
-    if(!(typeof msg === "undefined" || msg ==="")){
-      console.log(map);
-      if (io.sockets.connected[map[sender]])
-        io.to(map[sender]).emit('send', sender, msg);
-      if (io.sockets.connected[map[receiver]])
-        io.to(map[receiver]).emit('send', sender, msg);
-      // io.emit('send', sender, msg);
-    }
-  });
-  client.on("disconnect", function(){
-    console.log('user disconnected');
-  });
-});
 
 module.exports = app;
