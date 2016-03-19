@@ -11,6 +11,7 @@ var app = express();
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var chats = require('./routes/chats');
+var rooms = require('./routes/rooms')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,9 +29,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/chat', chats);
+app.use('/room', rooms);
 
-
-var rooms = [];
+var all_rooms = new Array();
+global.all_rooms = all_rooms;
+console.log("type of rooms: " +  all_rooms instanceof Array);
 
 var socket_io = require( "socket.io" );
 var io = socket_io();
@@ -67,6 +70,8 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
 
 
 
