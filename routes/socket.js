@@ -1,20 +1,25 @@
-module.exports = function(io) {
+module.exports = function(io, rooms) {
   var i =1;
   var map = new Object();
   io.on('connection', function(client){
-    map[i++]=client.id;
-    console.log(i-1 + " " + client.id);
-    client.send(map[1]);
-    client.on("send", function(sender, receiver,  msg){
-      console.log("send function:  " + sender + " "  + receiver + "  " + msg);
+    client.join('1');
+    client.on("send", function(sender, room_name,  msg){
+      console.log("send function:  " + sender + " "  + room_name + "  " + msg);
       if(!(typeof msg === "undefined" || msg ==="")){
-        console.log(map);
-        if (io.sockets.connected[map[sender]])
-          io.to(map[sender]).emit('send', sender, msg);
-        if (io.sockets.connected[map[receiver]])
-          io.to(map[receiver]).emit('send', sender, msg);
-        // io.emit('send', sender, msg);
+        io.sockets.to(room_name).emit('send', sender, msg);
       }
+    });
+
+    client.on('newroom', function (data){
+      rooms.push(data);
+      console.log(rooms);
+    });
+
+
+    client.on('join', function(room){
+      // let's handle if the array doesn't contain the room later
+      // and let's trivially bind with name just for now.
+      client.join(room.name);
     });
     client.on("disconnect", function(){
       console.log('user disconnected');

@@ -11,17 +11,7 @@ var app = express();
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var chats = require('./routes/chats');
-// console.log(users);
-// console.log(chats);
-// console.log(chats.apple);
-var socket_io = require( "socket.io" );
-var io = socket_io();
-var s_io = require('./routes/socket.js')(io);
-// console.log(io);
-app.io = io;
 
-// the worst way to write the wrongs!
-// console.log(chats);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -38,6 +28,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/chat', chats);
+
+
+var rooms = [];
+
+var socket_io = require( "socket.io" );
+var io = socket_io();
+var s_io = require('./routes/socket.js')(io, rooms);
+
+app.io = io;
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

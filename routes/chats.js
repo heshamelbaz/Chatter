@@ -9,13 +9,14 @@ mongoose.connect(db.url);
 var socket_io = require( 'socket.io');
 
 router.get('/', function(req, res){
+  room_name = req.query.room;
   sender = req.query.sender;
   receiver = req.query.receiver;
-  if(typeof sender === "undefined" || typeof receiver === "undefined"){
+  if(typeof room_name === "undefined"){
     res.render('../views/pages/chat.ejs', {error: true});
   }
   else{
-    res.render('../views/pages/chat.ejs', {sender: sender, receiver: receiver});
+    res.render('../views/pages/chat.ejs', {sender: sender, receiver: receiver, room_name: room_name});
   }
   // console.log("sender from request: " + sender);
   // console.log("receiver from request: " + receiver);
