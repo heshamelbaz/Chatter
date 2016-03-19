@@ -1,0 +1,23 @@
+{
+  "name": "YACA",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Hesham ElBaz <heshamelbaz@hotmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/heshamelbaz/YACA",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "fontawesome#^4.5.0"
+  }
+}

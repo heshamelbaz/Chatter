@@ -3,7 +3,7 @@ var router = express.Router();
 var path = require('path');
 var mongoose = require('mongoose');
 var db = require('../config/db.js');
-mongoose.connect(db.url);
+// mongoose.connect(db.url[app.settings.env]);
 
 
 var socket_io = require( 'socket.io');

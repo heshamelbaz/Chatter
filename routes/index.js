@@ -1,9 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+	if(!req.isAuthenticated()){
+	  	res.render('layout', {
+			page: './pages/index', title: 'YACA', isLoggedIn: req.isAuthenticated(), message: req.flash('signupMessage') 
+  		});
+	} else {
+		res.render('layout', {
+			page: 'users/profile', title: 'YACA', isLoggedIn: req.isAuthenticated(), user: req.user
+		});
+	}
 });
 
 
