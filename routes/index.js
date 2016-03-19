@@ -4,7 +4,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
 	if(!req.isAuthenticated()){
 	  	res.render('layout', {
-			page: './pages/index', title: 'YACA', isLoggedIn: req.isAuthenticated(), message: req.flash('signupMessage') 
+			page: 'pages/index', title: 'YACA', isLoggedIn: req.isAuthenticated(), message: req.flash('signupMessage') 
   		});
 	} else {
 		res.render('layout', {

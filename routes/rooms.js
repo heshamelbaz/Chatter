@@ -1,14 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-var i = 1;
 router.get('/', function(req, res){
-  console.log(all_rooms);
+	res.render('layout', { page: 'pages/rooms', title: 'YACA', isLoggedIn: req.isAuthenticated(), rooms: all_rooms, user: req.user});
+});
 
-  var sender = i++;
-  
-  res.render('../views/pages/room.ejs', {data: all_rooms, user: sender});
-
+router.post('/', function(req, res){
+	all_rooms.push({ name: req.body.room_name, id: all_rooms.length + 1 });
+	res.render('layout', { page: 'pages/rooms', title: 'YACA', isLoggedIn: req.isAuthenticated(), rooms: all_rooms, user: req.user});	
 });
 
 module.exports = router;

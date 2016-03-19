@@ -66,9 +66,10 @@ console.log("type of rooms: " +  all_rooms instanceof Array);
 
 var socket_io = require( "socket.io" );
 var io = socket_io();
-var s_io = require('./routes/socket.js')(io, rooms);
+var s_io = require('./routes/socket.js')(io);
 
 app.io = io;
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
