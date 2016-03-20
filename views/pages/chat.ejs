@@ -13,13 +13,13 @@
     <button class="btn btn-success">Send</button>
 </form>
 
-  
-  
+
+
 <script>
   	var socket = io();
 
   	$('form').submit(function(){
-    		socket.emit('send', <%- JSON.stringify(user) %>, <%= room.id %>, $('#message').val());	
+    		socket.emit('send', <%- JSON.stringify(user) %>, <%- JSON.stringify(room) %>, $('#message').val());
     		$('#message').val('');
     		return false;
   	});
@@ -28,10 +28,8 @@
 		var str = '<tr><td width="10%">'+ sender.name + ': </td><td>' + msg  + '</td>';
 		$('#messages').append(str);
 	});
-	
-	$( document ).ready(function() { 
-   		 socket.emit('join', <%= room.id %>);
+
+	$( document ).ready(function() {
+   		 socket.emit('join', <%- JSON.stringify(room)%>);
 	});
 </script>
-
-

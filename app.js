@@ -65,7 +65,7 @@ global.all_rooms = all_rooms;
 
 var socket_io = require( "socket.io" );
 var io = socket_io();
-var s_io = require('./routes/socket.js')(io);
+var s_io = require('./routes/socket.js')(io, mongoose);
 
 app.io = io;
 
