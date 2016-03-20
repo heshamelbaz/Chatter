@@ -1,12 +1,13 @@
 <!doctype html>
+<link rel='stylesheet' href='/stylesheets/chat.css'>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
 <div>
 	<h1><%= room.name %></h1>
 </div>
 
-<table id="messages" class="table">
-</table>
+<ul class='timeline' id='timeline'>
+</ul>
 
 <form action="">
     <input id = "message"/>
@@ -25,8 +26,17 @@
   	});
 
 	socket.on('send', function(sender, msg){
-		var str = '<tr><td width="10%">'+ sender.name + ': </td><td>' + msg  + '</td>';
-		$('#messages').append(str);
+		var str = "<li>";
+		str += "<img class='timeline-badge' src=\"" + sender.photo +"\"/>";	
+		str += "<div class='timeline-panel'>";
+		str += "<div class='timeline-body'>";
+		str += msg
+		str += "</div>";
+		str += "<p><small class='text-muted'><i class='glyphicon glyphicon-time'></i> "+ sender.name +"</small></p>";
+		str += "</div>";
+		str += "</li>";
+		
+		$('#timeline').append(str);
 	});
 	
 	$( document ).ready(function() { 
