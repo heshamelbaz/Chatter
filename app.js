@@ -62,7 +62,6 @@ app.use('/room', rooms);
 
 var all_rooms = new Array();
 global.all_rooms = all_rooms;
-console.log("type of rooms: " +  all_rooms instanceof Array);
 
 var socket_io = require( "socket.io" );
 var io = socket_io();
