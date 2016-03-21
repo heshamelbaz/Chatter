@@ -11,10 +11,11 @@
 		<li>
 			<img class='timeline-badge' src='<%= messages[i].sender.photo %>'>	
 			<div class='timeline-panel'>
-				<div class='timeline-body'>";
+				<div class='timeline-body'>
 			 		<%= messages[i].content %>
 				</div>
-				<p><small class='text-muted'><i class='glyphicon glyphicon-time'></i><%= messages[i].sender.name %></small></p>";
+				<% var date = new Date(messages[i].timestamp) %>
+				<p><small class='text-muted'><i class='glyphicon glyphicon-time'></i> <%= date.getHours() + ':' + date.getMinutes() + ' ' + date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear() %> by <%= messages[i].sender.name %></small></p>
 			</div>
 		</li>	
 	<% } %>	
