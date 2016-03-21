@@ -7,7 +7,7 @@
 </div>
 
 <ul class='timeline' id='timeline'>
-	<% for (i = limit-1; i > -1; i--) { %>
+	<% for (i = Math.min(limit-1, messages.length-1) ; i > -1; i--) { %>
 		<li>
 			<img class='timeline-badge' src='<%= messages[i].sender.photo %>'>	
 			<div class='timeline-panel'>
