@@ -58,14 +58,11 @@ app.use(flash());
 app.use('/', routes);
 app.use('/users', users);
 app.use('/chat', chats);
-app.use('/room', rooms);
-
-var all_rooms = new Array();
-global.all_rooms = all_rooms;
+app.use('/rooms', rooms);
 
 var socket_io = require( "socket.io" );
 var io = socket_io();
-var s_io = require('./routes/socket.js')(io, mongoose);
+var s_io = require('./routes/socket.js')(io);
 
 app.io = io;
 

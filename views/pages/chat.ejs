@@ -6,6 +6,9 @@
 </div>
 
 <table id="messages" class="table">
+	<% for (i = limit-1; i > -1; i--) { %>
+		<tr><td width="10%"><%= messages[i].sender.name %>: </td><td><%= messages[i].content %></td></tr>
+	<% } %>
 </table>
 
 <form action="">
@@ -25,7 +28,7 @@
   	});
 
 	socket.on('send', function(sender, msg){
-		var str = '<tr><td width="10%">'+ sender.name + ': </td><td>' + msg  + '</td>';
+		var str = '<tr><td width="10%">'+ sender.name + ': </td><td>' + msg  + '</td></tr>';
 		$('#messages').append(str);
 	});
 

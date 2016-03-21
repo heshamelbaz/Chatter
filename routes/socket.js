@@ -1,34 +1,24 @@
-module.exports = function(io, mongoose) {
+var Message = require('../models/message.js');
 
-  console.log("show me your mongoose: ");
-  console.log(mongoose);
-
-  var im = mongoose.Schema({
-      content: String,
-      sender: String,
-      room: String,
-      timestamp: Number
-  });
-
-  var ims = mongoose.model('ims', im);
-
+module.exports = function(io) {
   io.on('connection', function(client){
     client.on("send", function(sender, room,  msg){
-      if(!(typeof msg === "undefined" || msg ==="")){
-        console.log('room: '+ room);
-        console.log(sender);
-        var example = new ims({ content: msg, sender: sender._id, room: room, timestamp: Date.now()});
-        example.save(function (err, fluffy) {
-          if (err) return console.error(err);
-          console.log("saved im, successfuly");
-        });
-        io.sockets.to(room._id).emit('send', sender, msg);
+      if(!(typeof msg === "undefined" || msg ==="")){ 
+	var newMessage = new Message({
+				content: msg,
+				sender: sender._id,
+				room: room._id,
+				timestamp: Date.now()
+			});	
+        newMessage.save(function (err, message) {
+          	if (err) return console.error(err); 
+       	 	io.sockets.to(room._id).emit('send', sender, msg);	
+	 });
       }
     });
 
 
-    client.on('join', function(room){
-      console.log(room)
+    client.on('join', function(room){ 
       // let's handle if the array doesn't contain the room later
       // and let's trivially bind with name just for now.
       //generally implement later

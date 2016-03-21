@@ -1,17 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
-var db = require('../config/db.js');
+var Room = require('../models/room.js');
+var Message = require('../models/message.js');
 
 router.get('/', function(req, res){
-  var room = { name: req.query.name, id: req.query.id };
-
-  if(typeof room === "undefined"){
-    res.render('layout', { page: 'pages/chat', title:'YACA', isLoggedIn: req.isAuthenticated(), user: req.user, error: true});
-  }
-  else{
-    res.render('layout', { page: 'pages/chat', title:'YACA', isLoggedIn: req.isAuthenticated(), user: req.user, room:room }); 
-  }
+  Room.findOne({_id: req.query.id },function(err, room){
+	var limit = 5;
+	if(err) return handleError(err);
+	if(typeof room === "undefined"){
+		res.render('layout', { page: 'pages/chat', title:'YACA', isLoggedIn: req.isAuthenticated(), user: req.user, error: true});
+	}
+	else{
+		Message.find({ room: room._id }).sort({'timestamp': -1}).limit(limit).populate('sender').exec(function(err, messages){
+			if(err) console.log(err);
+			console.log(JSON.stringify(messages));
+			res.render('layout', { page: 'pages/chat', title:'YACA', isLoggedIn: req.isAuthenticated(), user: req.user, room:room, messages: messages, limit: limit }); 		
+		});	
+	}	
+  });
 });
 
 

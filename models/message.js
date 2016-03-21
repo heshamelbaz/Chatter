@@ -1,22 +1,24 @@
 var mongoose = require('mongoose');
 
 var messageSchema = mongoose.Schema({
-	sender: {
-		type: Number,
-		required: [true]
+	content: {
+		type: String,
+		required: [true, 'Message must have a content']
 	},
-	receiver: {
-		type: Number,
-		required: [true]
+	sender: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true
+	},
+	room: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Room',
+		required: true
 	},
 	timestamp: {
 		type: Number,
-		default: Date.now();
-	},
-  deleted: {
-    type: Boolean,
-    default: false
-  }
+		default: Date.now()
+	}
 });
 
 
