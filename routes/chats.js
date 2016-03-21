@@ -13,8 +13,7 @@ router.get('/', function(req, res){
 	}
 	else{
 		Message.find({ room: room._id }).sort({'timestamp': -1}).limit(limit).populate('sender').exec(function(err, messages){
-			if(err) console.log(err);
-			console.log(JSON.stringify(messages));
+			if(err) handleError(err);
 			res.render('layout', { page: 'pages/chat', title:'YACA', isLoggedIn: req.isAuthenticated(), user: req.user, room:room, messages: messages, limit: limit }); 		
 		});	
 	}	

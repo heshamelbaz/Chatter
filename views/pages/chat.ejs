@@ -38,14 +38,14 @@
   	});
 
 	socket.on('send', function(sender, msg){
-
+		var date = new Date(msg.timestamp);
 		var str = "<li>";
 		str += "<img class='timeline-badge' src=\"" + sender.photo +"\"/>";	
 		str += "<div class='timeline-panel'>";
 		str += "<div class='timeline-body'>";
-		str += msg
+		str += msg.content
 		str += "</div>";
-		str += "<p><small class='text-muted'><i class='glyphicon glyphicon-time'></i> "+ sender.name +"</small></p>";
+		str += "<p><small class='text-muted'><i class='glyphicon glyphicon-time'></i> " + date.getHours() + ':' + date.getMinutes() + ' ' + date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear()+ ' by ' + sender.name + "</small></p>";
 		str += "</div>";
 		str += "</li>";
 		

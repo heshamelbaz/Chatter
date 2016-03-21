@@ -12,7 +12,7 @@ module.exports = function(io) {
 			});	
         newMessage.save(function (err, message) {
           	if (err) return console.error(err); 
-       	 	io.sockets.to(room._id).emit('send', sender, msg);	
+       	 	io.sockets.to(room._id).emit('send', sender, message);	
 	 });
       }
     });
