@@ -1,6 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var User = require('../models/user.js');
+router.get('/', function(req, res){
+	User.find(function(err, users){
+			res.render('layout', {page: 'users/index', title: 'YACA', isLoggedIn: req.isAuthenticated(), users: users });
+	});
+});
 
 router.post('/signup', passport.authenticate('local-signup', {
 	successRedirect: '/users/profile',

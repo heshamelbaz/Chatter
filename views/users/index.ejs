@@ -1,0 +1,14 @@
+<div>
+	<h1>All users </h1>
+</div>
+
+<ul class='timeline' id='timeline'>
+  <!-- // images should be added -->
+	<% for (var i in users) { %>
+		<li>
+			 		<%= users[i].name %>
+          ,
+          <%= users[i].email %>
+		</li>
+	<% } %>
+</ul>

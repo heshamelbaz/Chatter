@@ -12,11 +12,12 @@ router.get('/', function(req, res){
 		res.render('layout', { page: 'pages/chat', title:'YACA', isLoggedIn: req.isAuthenticated(), user: req.user, error: true});
 	}
 	else{
+    console.log("hereeeeeeeeeeeeeeeeeeeeeeee");
 		Message.find({ room: room._id }).sort({'timestamp': -1}).limit(limit).populate('sender').exec(function(err, messages){
 			if(err) handleError(err);
-			res.render('layout', { page: 'pages/chat', title:'YACA', isLoggedIn: req.isAuthenticated(), user: req.user, room:room, messages: messages, limit: limit }); 		
-		});	
-	}	
+			res.render('layout', { page: 'pages/chat', title:'YACA', isLoggedIn: req.isAuthenticated(), user: req.user, room:room, messages: messages, limit: limit });
+		});
+	}
   });
 });
 

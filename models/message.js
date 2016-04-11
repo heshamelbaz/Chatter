@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
+// that's an error! How can we search something I sent to someone?
 var messageSchema = mongoose.Schema({
 	content: {
 		type: String,

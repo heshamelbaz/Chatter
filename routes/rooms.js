@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-
 var Room =  require('../models/room.js');
 
 router.get('/', function(req, res){
@@ -11,8 +10,10 @@ router.get('/', function(req, res){
 	});
 });
 
+
+// modifiable to use react
 router.post('/', function(req, res){
-	var room = new Room({name: req.body.room_name});
+	var room = new Room({name: req.body.name});
 	room.save(function (err, fluffy){
 		if(err) return handleError(err);
 		Room.find(function (err, rooms) {

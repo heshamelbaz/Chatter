@@ -4,6 +4,11 @@ var roomSchema = mongoose.Schema({
 	name: {
 		type: String,
 		required: [true, 'Name is required']
+	},
+
+	// for now, it's nullable
+	creator: {
+		type: mongoose.Schema.Types.ObjectId
 	}
 });
 

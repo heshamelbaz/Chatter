@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var chats = require('./routes/chats');
@@ -21,7 +20,11 @@ var session = require('express-session');
 
 var db = require('./config/db.js');
 
+
 var app = express();
+
+var io = require( "socket.io" )();
+var s_io = require('./routes/socket.js')(io);
 
 mongoose.connect(db.url[app.settings.env]);
 require('./config/passport')(passport);
@@ -60,9 +63,7 @@ app.use('/users', users);
 app.use('/chat', chats);
 app.use('/rooms', rooms);
 
-var socket_io = require( "socket.io" );
-var io = socket_io();
-var s_io = require('./routes/socket.js')(io);
+
 
 app.io = io;
 
